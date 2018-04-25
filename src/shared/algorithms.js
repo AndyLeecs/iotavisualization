@@ -46,10 +46,21 @@ export const getAncestors = ({nodes, links, root}) => {
   return {nodes: visitedNodes, links: visitedLinks};
 };
 
+export const getTipsInProcess = ({nodes,links},time) => {
+    var tips = [];
+    for(let node of nodes){
+        if(node.time > time)
+            break;
+        else if(!links.some(link => link.target === node))
+            tips.push(node);
+    }
+
+    return new Set(tips);
+}
 export const getTips = ({nodes, links}) => {
   const tips = nodes.filter(node =>
     !links.some(link => link.target === node));
-
+//    console.log(new Set(tips).size);
   return new Set(tips);
 };
 

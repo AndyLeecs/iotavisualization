@@ -1,16 +1,36 @@
+import {getTipsInProcess} from './algorithms';
+
 const jStat = require('jStat').jStat;
 
-export const generateTangle = ({nodeCount, lambda = 1.5, h=1, alpha=0.5, tipSelectionAlgorithm}) => {
+
+export const generateTangle = ({nodeCount, lambda = 3.5, h=1, alpha=3.5, tipSelectionAlgorithm}) => {
+
+ nodeCount = 1000;
   jStat.exponential.sample(lambda);
   const genesis = {
     name: '0',
     time: 0,
   };
 
+  var constant = 40;
+  var a = 1;
+  var b = 1;
+  var c = 1;
+  var k =800;
+  var ke = -1;
   let nodes = [genesis];
-  let time = h;
+//let time = 0;
+h = 1;
+let time = h;
+var func_lambda = lambda;
   while (nodes.length < nodeCount) {
-    const delay = jStat.exponential.sample(lambda);
+
+  //    var func_lambda = k*Math.exp(ke*time);
+    func_lambda = 25;
+   if(time>=10 && time <= 15)
+       func_lambda = 50;
+
+    var delay = jStat.exponential.sample(func_lambda);
     time += delay;
     nodes.push({
       name: `${nodes.length}`,
@@ -40,6 +60,9 @@ export const generateTangle = ({nodeCount, lambda = 1.5, h=1, alpha=0.5, tipSele
         links.push({source: node, target: tips[1]});
       }
     }
+
+   if(nodes.length > 0 && links.length > 0)
+       console.log(node.name+" "+getTipsInProcess({nodes,links},node.time).size+" "+node.time);
   };
 
   return {

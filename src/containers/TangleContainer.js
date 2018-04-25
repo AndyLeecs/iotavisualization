@@ -61,7 +61,7 @@ const nodeCountMax = 500;
 const nodeCountDefault = 20;
 const lambdaMin = 0.1;
 const lambdaMax = 50;
-const lambdaDefault = 1.5;
+const lambdaDefault = 3.5;
 const alphaMin = 0;
 const alphaMax = 5;
 const alphaDefault = 0.5;
@@ -175,6 +175,12 @@ class TangleContainer extends React.Component {
       tipSelectionAlgorithm: tipSelectionDictionary[this.state.tipSelectionAlgorithm].algo,
     });
 
+    
+//    console.log(getTips({
+//        nodes: this.state.nodes,
+//        links: this.state.links,
+//      }).size);
+    
     const {width, height} = this.state;
 
     for (let node of tangle.nodes) {
@@ -194,6 +200,7 @@ class TangleContainer extends React.Component {
     });
 
     this.force.restart().alpha(1);
+
   }
   recalculateFixedPositions() {
     // Set genesis's y to center
@@ -358,6 +365,7 @@ class TangleContainer extends React.Component {
             nodes: this.state.nodes,
             links: this.state.links,
           })}
+        	
           showLabels={this.state.nodeRadius > showLabelsMinimumRadius ? true : false}
         />
       </div>
